@@ -1,8 +1,13 @@
 import React from "react";
 import "./App.css";
+import TitleAddBar from "./components/TitleAddBar";
 
-function App() {
-  return <div className="App">App</div>;
-}
+const App = () => {
+  return (
+    <div className="App">
+      <TitleAddBar />
+    </div>
+  );
+};
 
 export default App;
