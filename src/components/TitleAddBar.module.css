@@ -3,3 +3,34 @@
   height: 100vh;
   background-color: #ffffff;
 }
+
+.appName {
+  margin-top: 50px;
+  margin-bottom: 80px;
+  font-size: 30px;
+  letter-spacing: 0.5em;
+  font-weight: 700;
+  text-align: center;
+}
+
+.addTitleForm {
+  width: 500px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+.inputTitle {
+  width: 200px;
+  height: 30px;
+  border: none;
+  border-bottom: 2px solid #cccc;
+}
+
+.inputTitle:focus {
+  outline: none;
+  border-color: #8b8b8b;
+  transition: all 0.2s ease-in-out;
+}
