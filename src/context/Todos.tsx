@@ -1,9 +1,11 @@
 import React, { createContext, useCallback, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-type todoContext = {
+type todoContextType = {
   todoIds: string;
   setIsTodoIds: (ids: string) => void;
+  links: string;
+  setIsLinks: (links: string) => void;
   jobTitles: string;
   setIsJobTitles: (titles: string) => void;
   todo: string;
@@ -18,6 +20,7 @@ type todoContext = {
   setIsTodoTimestamp: (timestamp: string) => void;
   newTodoItems: {
     id: string;
+    links: string;
     titles: string;
     todo: string;
     detail: string;
@@ -27,6 +30,7 @@ type todoContext = {
   }[];
   setIsNewTodoItems: (
     id: string,
+    links: string,
     titles: string,
     todo: string,
     detail: string,
@@ -36,9 +40,11 @@ type todoContext = {
   ) => void;
 };
 
-const defaultTodoContext: todoContext = {
+const defaultTodoContext: todoContextType = {
   todoIds: uuidv4(),
   setIsTodoIds: () => {},
+  links: "",
+  setIsLinks: () => {},
   jobTitles: "",
   setIsJobTitles: () => {},
   todo: "",
@@ -54,6 +60,7 @@ const defaultTodoContext: todoContext = {
   newTodoItems: [
     {
       id: "",
+      links: "",
       titles: "",
       todo: "",
       detail: "",
@@ -65,10 +72,11 @@ const defaultTodoContext: todoContext = {
   setIsNewTodoItems: () => {},
 };
 
-export const todoContext = createContext<todoContext>(defaultTodoContext);
+export const todoContext = createContext<todoContextType>(defaultTodoContext);
 
-export const Todos = (): todoContext => {
+export const TodosProvider = () => {
   const [todoIds, setTodoIds] = useState("");
+  const [links, setLinks] = useState("");
   const [jobTitles, setJobTitles] = useState("");
   const [todo, setTodo] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
@@ -78,6 +86,7 @@ export const Todos = (): todoContext => {
   const [newTodoItems, setNewTodoItems] = useState([
     {
       id: "",
+      links: "",
       titles: "",
       todo: "",
       detail: "",
@@ -89,6 +98,9 @@ export const Todos = (): todoContext => {
 
   const setIsTodoIds = useCallback((current: string): void => {
     setTodoIds(current);
+  }, []);
+  const setIsLinks = useCallback((current: string): void => {
+    setLinks(current);
   }, []);
   const setIsJobTitles = useCallback((current: string): void => {
     setJobTitles(current);
@@ -111,6 +123,7 @@ export const Todos = (): todoContext => {
   const setIsNewTodoItems = useCallback(
     (
       todoIds: string,
+      links: string,
       jobTitles: string,
       todo: string,
       todoDetail: string,
@@ -122,6 +135,7 @@ export const Todos = (): todoContext => {
         ...prevItems,
         {
           id: todoIds,
+          links: links,
           titles: jobTitles,
           todo: todo,
           detail: todoDetail,
@@ -137,6 +151,8 @@ export const Todos = (): todoContext => {
   return {
     todoIds,
     setIsTodoIds,
+    links,
+    setIsLinks,
     jobTitles,
     setIsJobTitles,
     todo,
