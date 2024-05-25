@@ -1,0 +1,59 @@
+.todoPages {
+  width: 78vw;
+  height: 100vh;
+  background-color: #ffffff;
+  margin-left: auto;
+}
+
+.titleName {
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  margin-left: 30px;
+}
+
+.addTodoForm {
+  width: 70%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+  margin-top: 30px;
+}
+
+.inputTodo {
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  border: none;
+  border-bottom: 2px solid #cccc;
+}
+
+.inputTodo:focus {
+  outline: none;
+  border-color: #8b8b8b;
+  transition: all 0.2s ease-in-out;
+}
+
+.addTodoButton {
+  background-color: white;
+  border: none;
+  margin-left: 40px;
+}
+
+.todoStatus {
+  margin-top: 50px;
+  margin-left: 30px;
+}
+
+.inProgress {
+  font-size: 30px;
+}
+
+.notStarted {
+  font-size: 30px;
+}
+
+.completed {
+  font-size: 30px;
+}
