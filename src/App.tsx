@@ -1,43 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import TitleAddBar from "./components/TitleAddBar";
-import { todoContext, Todos } from "./context/Todos";
-
-// interface TODO {
-//   id: string;
-//   title: string;
-//   todo: string;
-//   detail: string;
-//   status: string;
-//   deadline: string;
-//   timestamp: string;
-// }
+import { todoContext, TodosProvider } from "./context/Todos";
+import { Routes, Route } from "react-router-dom";
+import { TodoPages } from "./components/TodoPages";
 
 const App: React.FC = () => {
-  // const [todoIds, setTodoIds] = useState<string>("");
-  // const [jobTitles, setJobTitles] = useState<string>("");
-  // const [todo, setTodo] = useState<string>("");
-  // const [todoDetail, setTodoDetail] = useState<string>("");
-  // const [todoStatus, setTodoStatus] = useState<string>("");
-  // const [todoDeadline, setTodoDeadline] = useState<string>("");
-  // const [todoTimestamp, setTodoTimestamp] = useState<string>("");
-  // const [todos, setTodo] = [
-  //   {
-  //     todoIds: todoIds,
-  //     jobTitles: jobTitles,
-  //     todo: todo,
-  //     todoDetail: todoDetail,
-  //     todoStatus: todoStatus,
-  //     todoDeadline: todoDeadline,
-  //     todoTimestamp: todoTimestamp,
-  //   },
-  // ];
-  const ctx = Todos();
+  const ctx = TodosProvider();
+  console.log(ctx.links);
 
   return (
     <div className="App">
       <todoContext.Provider value={ctx}>
         <TitleAddBar />
+        <Routes>
+          <Route path={ctx.links} element={<TodoPages />} />
+        </Routes>
       </todoContext.Provider>
     </div>
   );

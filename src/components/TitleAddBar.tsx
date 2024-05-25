@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./TitleAddBar.module.css";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -8,6 +8,8 @@ import TocIcon from "@mui/icons-material/Toc";
 import AddIcon from "@mui/icons-material/Add";
 import { todoContext } from "../context/Todos";
 import { v4 as uuidv4 } from "uuid";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const titleList = {
   p: 0,
@@ -28,17 +30,25 @@ const TitleAddBar: React.FC = () => {
   type newTitle = {
     id: string;
     title: string;
+    link: string;
   };
 
+  // サイドバーへタイトルの追加
   const addTitle = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newTitle: newTitle = {
       id: uuidv4(),
       title: inputTitle,
+      link: `/${inputTitle}`,
     };
     setTitleLists([newTitle, ...titleLists]);
     setInputTitle("");
+  };
+
+  //タイトルをクリックしページ遷移
+  const onTodoPage = (link: string) => {
+    ctx.setIsLinks(link);
   };
 
   return (
@@ -66,10 +76,20 @@ const TitleAddBar: React.FC = () => {
       <List sx={titleList} aria-label="mailbox folders">
         {titleLists.map((title) => (
           <div key={title.id}>
-            <ListItem>
-              <TocIcon />
-              <ListItemText primary={title.title} style={{ paddingLeft: 10 }} />
-            </ListItem>
+            <Link to={title.link}>
+              <Button
+                type="button"
+                style={{ width: "100%", color: "#000" }}
+                onClick={() => {
+                  onTodoPage(title.link);
+                }}
+              >
+                <ListItem>
+                  <TocIcon />
+                  <ListItemText primary={title.title} style={{ paddingLeft: 10 }} />
+                </ListItem>
+              </Button>
+            </Link>
             <Divider component="li" />
           </div>
         ))}
