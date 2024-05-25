@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./TitleAddBar.module.css";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import { Box, TextField } from "@mui/material";
 import TocIcon from "@mui/icons-material/Toc";
 import AddIcon from "@mui/icons-material/Add";
+import { todoContext } from "../context/Todos";
+import { v4 as uuidv4 } from "uuid";
 
 const titleList = {
   p: 0,
@@ -19,11 +20,26 @@ const titleList = {
   marginTop: "50px",
 };
 
-const TitleAddBar = () => {
-  const [title, setTitle] = useState("");
-  const titleLists: string[] = ["inbox", "mail", "job", "power"];
+const TitleAddBar: React.FC = () => {
+  const ctx = useContext(todoContext);
+  const [inputTitle, setInputTitle] = useState("");
+  const [titleLists, setTitleLists] = useState<newTitle[]>([]);
 
-  const addTitle = () => {};
+  type newTitle = {
+    id: string;
+    title: string;
+  };
+
+  const addTitle = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const newTitle: newTitle = {
+      id: uuidv4(),
+      title: inputTitle,
+    };
+    setTitleLists([newTitle, ...titleLists]);
+    setInputTitle("");
+  };
 
   return (
     <div className={styles.titleAddBar}>
@@ -32,28 +48,32 @@ const TitleAddBar = () => {
         <p>TODO</p>
         <p>DATA</p>
       </div>
-      <form onSubmit={addTitle} className={styles.addTitleForm}>
+      <form onSubmit={(e) => addTitle(e)} className={styles.addTitleForm}>
         <input
           type="text"
+          name="inputTitle"
           placeholder="Add Title"
           className={styles.inputTitle}
-          value={title}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+          value={inputTitle}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setInputTitle(e.target.value)
+          }
         />
-        <AddIcon sx={{ marginLeft: "18px" }} />
+        <button disabled={!inputTitle} type="submit" className={styles.addTitleButton}>
+          <AddIcon sx={{ marginLeft: "10px" }} />
+        </button>
       </form>
       <List sx={titleList} aria-label="mailbox folders">
         {titleLists.map((title) => (
-          <>
+          <div key={title.id}>
             <ListItem>
               <TocIcon />
-              <ListItemText primary={title} style={{ paddingLeft: 10 }} />
+              <ListItemText primary={title.title} style={{ paddingLeft: 10 }} />
             </ListItem>
             <Divider component="li" />
-          </>
+          </div>
         ))}
       </List>
-      ;
     </div>
   );
 };

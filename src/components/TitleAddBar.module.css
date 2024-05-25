@@ -22,6 +22,11 @@
   margin-top: 30px;
 }
 
+.addTitleButton {
+  background-color: white;
+  border: none;
+}
+
 .inputTitle {
   width: 200px;
   height: 30px;
