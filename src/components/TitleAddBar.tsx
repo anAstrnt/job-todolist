@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./TitleAddBar.module.css";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -73,13 +73,13 @@ const TitleAddBar: React.FC = () => {
           <AddIcon sx={{ marginLeft: "10px" }} />
         </button>
       </form>
-      <List sx={titleList} aria-label="mailbox folders">
+      <List sx={titleList} aria-label="mailbox folders" style={{ width: "80%" }}>
         {titleLists.map((title) => (
           <div key={title.id}>
             <Link to={title.link}>
               <Button
                 type="button"
-                style={{ width: "100%", color: "#000" }}
+                style={{ color: "#000", width: "100%" }}
                 onClick={() => {
                   onTodoPage(title.link);
                 }}

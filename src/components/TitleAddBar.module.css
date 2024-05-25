@@ -1,5 +1,6 @@
 .titleAddBar {
-  width: 15vw;
+  margin-left: 1vw;
+  width: 20vw;
   height: 100vh;
   background-color: #ffffff;
 }
@@ -28,7 +29,7 @@
 }
 
 .inputTitle {
-  width: 200px;
+  width: 70%;
   height: 30px;
   border: none;
   border-bottom: 2px solid #cccc;
