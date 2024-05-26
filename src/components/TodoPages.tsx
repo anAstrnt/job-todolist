@@ -58,11 +58,11 @@ export const TodoPages: React.FC = () => {
     );
   };
 
+  const isLocationPathname = !location.pathname.substring(1).trim();
+
   const inProgressTodos = todoItems.filter((todo) => todo.status === "inProgress");
   const notStartedTodos = todoItems.filter((todo) => todo.status === "notStarted");
   const completedTodos = todoItems.filter((todo) => todo.status === "completed");
-
-  console.log(todoItems);
 
   return (
     <div className={styles.todoPages}>
@@ -78,7 +78,7 @@ export const TodoPages: React.FC = () => {
             value={inputNewTodo}
             onChange={(e) => inputTodo(e)}
           />
-          <button type="submit" className={styles.addTodoButton}>
+          <button className={styles.addTodoButton} disabled={isLocationPathname}>
             <AddBoxIcon sx={{ width: "20%", height: "20%" }} />
           </button>
         </form>
