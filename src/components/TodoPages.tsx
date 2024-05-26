@@ -3,15 +3,10 @@ import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./TodoPages.module.css";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
 import AlarmIcon from "@mui/icons-material/Alarm";
 import AlarmOffIcon from "@mui/icons-material/AlarmOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import Typography from "@mui/material/Typography";
+import TodoStateSection from "./TodoStateSection";
 
 type todoItems = {
   id: string;
@@ -63,6 +58,10 @@ export const TodoPages: React.FC = () => {
     );
   };
 
+  const inProgressTodos = todoItems.filter((todo) => todo.status === "inProgress");
+  const notStartedTodos = todoItems.filter((todo) => todo.status === "notStarted");
+  const completedTodos = todoItems.filter((todo) => todo.status === "completed");
+
   console.log(todoItems);
 
   return (
@@ -87,137 +86,24 @@ export const TodoPages: React.FC = () => {
 
       {/* TodoAria */}
       <div className={styles.todoStatus}>
-        <div className={styles.inProgress}>
-          <div className={styles.inProgressTitle}>
-            <AlarmIcon />
-            <p>In Progress</p>
-          </div>
-          {todoItems
-            .filter((todo) => todo.status === "inProgress")
-            .map((todo) => (
-              <div key={todo.id} className={styles.todoCard}>
-                <Card sx={{ maxWidth: 276 }}>
-                  <CardHeader
-                    title={todo.todo}
-                    subheader={todo.deadline || "No Deadline"}
-                  />
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      {todo.detail || "no detail"}
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing sx={{ justifyContent: "right" }}>
-                    <IconButton
-                      aria-label="in progress"
-                      onClick={() => updateTodoStatus(todo.id, "inProgress")}
-                    >
-                      <AlarmIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="not started"
-                      onClick={() => updateTodoStatus(todo.id, "notStarted")}
-                    >
-                      <AlarmOffIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="completed"
-                      onClick={() => updateTodoStatus(todo.id, "completed")}
-                    >
-                      <CheckCircleIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>
-              </div>
-            ))}
-        </div>
-
-        <div className={styles.notStarted}>
-          <div className={styles.notStartedTitle}>
-            <AlarmOffIcon />
-            <p>Not Started</p>
-          </div>
-          {todoItems
-            .filter((todo) => todo.status === "notStarted")
-            .map((todo) => (
-              <div key={todo.id} className={styles.todoCard}>
-                <Card sx={{ maxWidth: 276 }}>
-                  <CardHeader
-                    title={todo.todo}
-                    subheader={todo.deadline || "No Deadline"}
-                  />
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      {todo.detail || "no detail"}
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing sx={{ justifyContent: "right" }}>
-                    <IconButton
-                      aria-label="in progress"
-                      onClick={() => updateTodoStatus(todo.id, "inProgress")}
-                    >
-                      <AlarmIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="not started"
-                      onClick={() => updateTodoStatus(todo.id, "notStarted")}
-                    >
-                      <AlarmOffIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="completed"
-                      onClick={() => updateTodoStatus(todo.id, "completed")}
-                    >
-                      <CheckCircleIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>
-              </div>
-            ))}
-        </div>
-
-        <div className={styles.completed}>
-          <div className={styles.completedTitle}>
-            <CheckCircleIcon />
-            <p>Completed</p>
-          </div>
-          {todoItems
-            .filter((todo) => todo.status === "completed")
-            .map((todo) => (
-              <div key={todo.id} className={styles.todoCard}>
-                <Card sx={{ maxWidth: 276 }}>
-                  <CardHeader
-                    title={todo.todo}
-                    subheader={todo.deadline || "No Deadline"}
-                  />
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      {todo.detail || "no detail"}
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing sx={{ justifyContent: "right" }}>
-                    <IconButton
-                      aria-label="in progress"
-                      onClick={() => updateTodoStatus(todo.id, "inProgress")}
-                    >
-                      <AlarmIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="not started"
-                      onClick={() => updateTodoStatus(todo.id, "notStarted")}
-                    >
-                      <AlarmOffIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="completed"
-                      onClick={() => updateTodoStatus(todo.id, "completed")}
-                    >
-                      <CheckCircleIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>
-              </div>
-            ))}
-        </div>
+        <TodoStateSection
+          title="In Progress"
+          icon={<AlarmIcon />}
+          statusFilter={inProgressTodos}
+          updateStatus={updateTodoStatus}
+        />
+        <TodoStateSection
+          title="Not Started"
+          icon={<AlarmOffIcon />}
+          statusFilter={notStartedTodos}
+          updateStatus={updateTodoStatus}
+        />
+        <TodoStateSection
+          title="Completed"
+          icon={<CheckCircleIcon />}
+          statusFilter={completedTodos}
+          updateStatus={updateTodoStatus}
+        />
       </div>
     </div>
   );

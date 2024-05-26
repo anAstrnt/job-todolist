@@ -35,45 +35,12 @@
   transition: all 0.2s ease-in-out;
 }
 
-.addTodoButton {
-  background-color: white;
-  border: none;
-}
-
-.todoCard {
-  display: inline-block;
-  width: 276px;
-  margin: 10px;
-}
-
 .todoStatus {
   margin-top: 50px;
   margin-left: 30px;
 }
 
-.inProgress {
-  font-size: 30px;
-}
-
-.inProgressTitle p {
-  display: inline-block;
-  margin-left: 15px;
-}
-
-.notStarted {
-  font-size: 30px;
-}
-
-.notStartedTitle p {
-  display: inline-block;
-  margin-left: 15px;
-}
-
-.completed {
-  font-size: 30px;
-}
-
-.completedTitle p {
-  display: inline-block;
-  margin-left: 15px;
+.addTodoButton {
+  background-color: white;
+  border: none;
 }

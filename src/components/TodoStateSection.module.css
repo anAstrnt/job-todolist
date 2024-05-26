@@ -1,0 +1,14 @@
+.todoStatus {
+  font-size: 30px;
+}
+
+.todoStatusTitle p {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.todoCard {
+  display: inline-block;
+  width: 276px;
+  margin: 10px;
+}
