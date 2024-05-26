@@ -7,7 +7,6 @@ import { TodoPages } from "./components/TodoPages";
 
 const App: React.FC = () => {
   const ctx = TodosProvider();
-  console.log(ctx.links);
 
   return (
     <div className="App">

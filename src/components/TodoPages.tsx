@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import styles from "./TodoPages.module.css";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -12,17 +13,64 @@ import AlarmOffIcon from "@mui/icons-material/AlarmOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Typography from "@mui/material/Typography";
 
-export const TodoPages = () => {
+type todoItems = {
+  id: string;
+  links: string;
+  titles: string;
+  todo: string;
+  detail: string;
+  status: string;
+  deadline: string;
+  timestamp: string;
+}[];
+
+export const TodoPages: React.FC = () => {
+  const location = useLocation();
+  const [inputNewTodo, setInputNewTodo] = useState("");
+  const [todoStatus, setTodoStatus] = useState<string>("notStarted");
+  const [todoItems, setTodoItems] = useState<todoItems>([]);
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+
+  const addTodos = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const newTodo = {
+      id: uuidv4(),
+      links: location.pathname,
+      titles: location.pathname.substring(1),
+      todo: inputNewTodo,
+      detail: "",
+      status: todoStatus,
+      deadline: "",
+      timestamp: `${year}年${month}月${day}日`,
+    };
+
+    setTodoItems([newTodo, ...todoItems]);
+    setInputNewTodo("");
+  };
+
+  const inputTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputNewTodo(e.target.value);
+  };
+
+  console.log(todoItems);
+
   return (
     <div className={styles.todoPages}>
       <div className={styles.titleName}>
-        <p>Title</p>
-        <form className={styles.addTodoForm}>
+        <p>{location.pathname.substring(1)}</p>
+        <form className={styles.addTodoForm} onSubmit={(e) => addTodos(e)}>
           <input
             type="text"
-            name="inputTitle"
-            placeholder="Add Title"
+            name="inputTodo"
+            placeholder="Add Todo"
             className={styles.inputTodo}
+            value={inputNewTodo}
+            onChange={(e) => inputTodo(e)}
           />
           <button type="submit" className={styles.addTodoButton}>
             <AddBoxIcon sx={{ width: "20%", height: "20%" }} />
@@ -35,42 +83,102 @@ export const TodoPages = () => {
             <AlarmIcon />
             <p>In Progress</p>
           </div>
-          <Card sx={{ maxWidth: 276 }}>
-            <CardHeader
-              title="Shrimp and Chorizo Paella"
-              subheader="September 14, 2016"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to cook
-                together with your guests. Add 1 cup of frozen peas along with the
-                mussels, if you like.
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing sx={{ justifyContent: "right" }}>
-              <IconButton aria-label="in progress">
-                <AlarmIcon />
-              </IconButton>
-              <IconButton aria-label="not started">
-                <AlarmOffIcon />
-              </IconButton>
-              <IconButton aria-label="completed">
-                <CheckCircleIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
+          {todoItems.map((todo) => (
+            <div key={todo.id} className={styles.todoCard}>
+              {todo.status === "inProgress" && (
+                <Card sx={{ maxWidth: 276 }}>
+                  <CardHeader
+                    title={todo.todo}
+                    subheader={todo.deadline || "No Deadline"}
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {todo.detail || "no detail"}
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing sx={{ justifyContent: "right" }}>
+                    <IconButton aria-label="in progress">
+                      <AlarmIcon />
+                    </IconButton>
+                    <IconButton aria-label="not started">
+                      <AlarmOffIcon />
+                    </IconButton>
+                    <IconButton aria-label="completed">
+                      <CheckCircleIcon />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              )}
+            </div>
+          ))}
         </div>
         <div className={styles.notStarted}>
           <div className={styles.notStartedTitle}>
             <AlarmOffIcon />
             <p>Not Started</p>
           </div>
+          {todoItems.map((todo) => (
+            <div key={todo.id} className={styles.todoCard}>
+              {todo.status === "notStarted" && (
+                <Card sx={{ maxWidth: 276 }}>
+                  <CardHeader
+                    title={todo.todo}
+                    subheader={todo.deadline || "No Deadline"}
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {todo.detail || "no detail"}
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing sx={{ justifyContent: "right" }}>
+                    <IconButton aria-label="in progress">
+                      <AlarmIcon />
+                    </IconButton>
+                    <IconButton aria-label="not started">
+                      <AlarmOffIcon />
+                    </IconButton>
+                    <IconButton aria-label="completed">
+                      <CheckCircleIcon />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              )}
+            </div>
+          ))}
         </div>
         <div className={styles.completed}>
           <div className={styles.completedTitle}>
             <CheckCircleIcon />
             <p>Completed</p>
           </div>
+          {todoItems.map((todo) => (
+            <div key={todo.id} className={styles.todoCard}>
+              {todo.status === "completed" && (
+                <Card sx={{ maxWidth: 276 }}>
+                  <CardHeader
+                    title={todo.todo}
+                    subheader={todo.deadline || "No Deadline"}
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {todo.detail || "no detail"}
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing sx={{ justifyContent: "right" }}>
+                    <IconButton aria-label="in progress">
+                      <AlarmIcon />
+                    </IconButton>
+                    <IconButton aria-label="not started">
+                      <AlarmOffIcon />
+                    </IconButton>
+                    <IconButton aria-label="completed">
+                      <CheckCircleIcon />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

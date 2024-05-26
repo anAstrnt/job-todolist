@@ -40,6 +40,12 @@
   border: none;
 }
 
+.todoCard {
+  display: inline-block;
+  width: 276px;
+  margin: 10px;
+}
+
 .todoStatus {
   margin-top: 50px;
   margin-left: 30px;
