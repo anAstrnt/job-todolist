@@ -57,10 +57,17 @@ export const TodoPages: React.FC = () => {
     setInputNewTodo(e.target.value);
   };
 
+  const updateTodoStatus = (id: string, newStatus: string) => {
+    setTodoItems((prevItems) =>
+      prevItems.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
+    );
+  };
+
   console.log(todoItems);
 
   return (
     <div className={styles.todoPages}>
+      {/* inputTodoAria */}
       <div className={styles.titleName}>
         <p>{location.pathname.substring(1)}</p>
         <form className={styles.addTodoForm} onSubmit={(e) => addTodos(e)}>
@@ -77,15 +84,18 @@ export const TodoPages: React.FC = () => {
           </button>
         </form>
       </div>
+
+      {/* TodoAria */}
       <div className={styles.todoStatus}>
         <div className={styles.inProgress}>
           <div className={styles.inProgressTitle}>
             <AlarmIcon />
             <p>In Progress</p>
           </div>
-          {todoItems.map((todo) => (
-            <div key={todo.id} className={styles.todoCard}>
-              {todo.status === "inProgress" && (
+          {todoItems
+            .filter((todo) => todo.status === "inProgress")
+            .map((todo) => (
+              <div key={todo.id} className={styles.todoCard}>
                 <Card sx={{ maxWidth: 276 }}>
                   <CardHeader
                     title={todo.todo}
@@ -97,29 +107,39 @@ export const TodoPages: React.FC = () => {
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing sx={{ justifyContent: "right" }}>
-                    <IconButton aria-label="in progress">
+                    <IconButton
+                      aria-label="in progress"
+                      onClick={() => updateTodoStatus(todo.id, "inProgress")}
+                    >
                       <AlarmIcon />
                     </IconButton>
-                    <IconButton aria-label="not started">
+                    <IconButton
+                      aria-label="not started"
+                      onClick={() => updateTodoStatus(todo.id, "notStarted")}
+                    >
                       <AlarmOffIcon />
                     </IconButton>
-                    <IconButton aria-label="completed">
+                    <IconButton
+                      aria-label="completed"
+                      onClick={() => updateTodoStatus(todo.id, "completed")}
+                    >
                       <CheckCircleIcon />
                     </IconButton>
                   </CardActions>
                 </Card>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
+
         <div className={styles.notStarted}>
           <div className={styles.notStartedTitle}>
             <AlarmOffIcon />
             <p>Not Started</p>
           </div>
-          {todoItems.map((todo) => (
-            <div key={todo.id} className={styles.todoCard}>
-              {todo.status === "notStarted" && (
+          {todoItems
+            .filter((todo) => todo.status === "notStarted")
+            .map((todo) => (
+              <div key={todo.id} className={styles.todoCard}>
                 <Card sx={{ maxWidth: 276 }}>
                   <CardHeader
                     title={todo.todo}
@@ -131,29 +151,39 @@ export const TodoPages: React.FC = () => {
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing sx={{ justifyContent: "right" }}>
-                    <IconButton aria-label="in progress">
+                    <IconButton
+                      aria-label="in progress"
+                      onClick={() => updateTodoStatus(todo.id, "inProgress")}
+                    >
                       <AlarmIcon />
                     </IconButton>
-                    <IconButton aria-label="not started">
+                    <IconButton
+                      aria-label="not started"
+                      onClick={() => updateTodoStatus(todo.id, "notStarted")}
+                    >
                       <AlarmOffIcon />
                     </IconButton>
-                    <IconButton aria-label="completed">
+                    <IconButton
+                      aria-label="completed"
+                      onClick={() => updateTodoStatus(todo.id, "completed")}
+                    >
                       <CheckCircleIcon />
                     </IconButton>
                   </CardActions>
                 </Card>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
+
         <div className={styles.completed}>
           <div className={styles.completedTitle}>
             <CheckCircleIcon />
             <p>Completed</p>
           </div>
-          {todoItems.map((todo) => (
-            <div key={todo.id} className={styles.todoCard}>
-              {todo.status === "completed" && (
+          {todoItems
+            .filter((todo) => todo.status === "completed")
+            .map((todo) => (
+              <div key={todo.id} className={styles.todoCard}>
                 <Card sx={{ maxWidth: 276 }}>
                   <CardHeader
                     title={todo.todo}
@@ -165,20 +195,28 @@ export const TodoPages: React.FC = () => {
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing sx={{ justifyContent: "right" }}>
-                    <IconButton aria-label="in progress">
+                    <IconButton
+                      aria-label="in progress"
+                      onClick={() => updateTodoStatus(todo.id, "inProgress")}
+                    >
                       <AlarmIcon />
                     </IconButton>
-                    <IconButton aria-label="not started">
+                    <IconButton
+                      aria-label="not started"
+                      onClick={() => updateTodoStatus(todo.id, "notStarted")}
+                    >
                       <AlarmOffIcon />
                     </IconButton>
-                    <IconButton aria-label="completed">
+                    <IconButton
+                      aria-label="completed"
+                      onClick={() => updateTodoStatus(todo.id, "completed")}
+                    >
                       <CheckCircleIcon />
                     </IconButton>
                   </CardActions>
                 </Card>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
       </div>
     </div>
