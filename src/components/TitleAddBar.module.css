@@ -8,10 +8,14 @@
 .appName {
   margin-top: 50px;
   margin-bottom: 80px;
-  font-size: 30px;
-  letter-spacing: 0.5em;
+  font-size: 20px;
+  letter-spacing: 1em;
   font-weight: 700;
   text-align: center;
+}
+
+.appName p {
+  font-weight: 900;
 }
 
 .addTitleForm {

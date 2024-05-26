@@ -54,7 +54,7 @@ const TitleAddBar: React.FC = () => {
   return (
     <div className={styles.titleAddBar}>
       <div className={styles.appName}>
-        <p>JOB</p>
+        <p>JOB.</p>
         <p>TODO</p>
         <p>DATA</p>
       </div>
@@ -70,10 +70,14 @@ const TitleAddBar: React.FC = () => {
           }
         />
         <button disabled={!inputTitle} type="submit" className={styles.addTitleButton}>
-          <AddIcon sx={{ marginLeft: "10px" }} />
+          <AddIcon sx={{ marginLeft: "10px", cursor: "pointer" }} />
         </button>
       </form>
-      <List sx={titleList} aria-label="mailbox folders" style={{ width: "80%" }}>
+      <List
+        sx={titleList}
+        aria-label="todoLists"
+        style={{ width: "100%", marginLeft: "auto" }}
+      >
         {titleLists.map((title) => (
           <div key={title.id}>
             <Link to={title.link}>

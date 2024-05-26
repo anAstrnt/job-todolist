@@ -38,7 +38,6 @@
 .addTodoButton {
   background-color: white;
   border: none;
-  margin-left: 40px;
 }
 
 .todoStatus {
@@ -50,10 +49,25 @@
   font-size: 30px;
 }
 
+.inProgressTitle p {
+  display: inline-block;
+  margin-left: 15px;
+}
+
 .notStarted {
   font-size: 30px;
 }
 
+.notStartedTitle p {
+  display: inline-block;
+  margin-left: 15px;
+}
+
 .completed {
   font-size: 30px;
+}
+
+.completedTitle p {
+  display: inline-block;
+  margin-left: 15px;
 }
