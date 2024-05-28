@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./TodoStateSection.module.css";
 import TodoDialog from "./TodoDialog";
 import Card from "@mui/material/Card";
@@ -10,7 +10,7 @@ import AlarmIcon from "@mui/icons-material/Alarm";
 import AlarmOffIcon from "@mui/icons-material/AlarmOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Typography from "@mui/material/Typography";
-import { Grid, SelectChangeEvent } from "@mui/material";
+import { Grid } from "@mui/material";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 
@@ -29,12 +29,6 @@ type TodoStateSectionProps = {
   handleDeleteTodo: (id: string) => void;
   inputTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputNewTodo: string;
-  inputNewDeadline: string;
-  inputNewStatus: string;
-  inputNewDetail: string;
-  inputDeadline: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  editableTodo: boolean;
-  editableTodoOpen: () => void;
   updateTodos: (
     id: string,
     newTodo: string,
@@ -43,11 +37,6 @@ type TodoStateSectionProps = {
     detail: string
   ) => void;
   updateStatus: (id: string, status: string) => void;
-  updateTodoStatusInDialog: (e: SelectChangeEvent) => void;
-  updateTodoDetailInDialog: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  dialogHandleOpen: () => void;
-  dialogHandleClose: () => void;
-  dialogOpen: boolean;
 };
 
 const TodoStateSection: React.FC<TodoStateSectionProps> = ({
@@ -57,20 +46,18 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
   statusFilter,
   inputTodo,
   inputNewTodo,
-  inputNewDeadline,
-  inputDeadline,
-  inputNewStatus,
-  inputNewDetail,
-  editableTodo,
-  editableTodoOpen,
   updateTodos,
   updateStatus,
-  updateTodoStatusInDialog,
-  updateTodoDetailInDialog,
-  dialogHandleOpen,
-  dialogHandleClose,
-  dialogOpen,
 }) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const dialogHandleOpen = () => {
+    setDialogOpen(true);
+  };
+  const dialogHandleClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     // TodoCard
     <div className={styles.todoStatus}>
@@ -127,15 +114,7 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
             todo={todo}
             inputTodo={inputTodo}
             inputNewTodo={inputNewTodo}
-            inputNewDeadline={inputNewDeadline}
-            inputDeadline={inputDeadline}
-            inputNewStatus={inputNewStatus}
-            inputNewDetail={inputNewDetail}
-            editableTodo={editableTodo}
-            editableTodoOpen={editableTodoOpen}
             updateTodos={updateTodos}
-            updateTodoStatusInDialog={updateTodoStatusInDialog}
-            updateTodoDetailInDialog={updateTodoDetailInDialog}
             dialogHandleClose={dialogHandleClose}
             dialogOpen={dialogOpen}
           />

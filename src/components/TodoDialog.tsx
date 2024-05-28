@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./TodoDialog.module.css";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import CreateIcon from "@mui/icons-material/Create";
 import { SelectChangeEvent } from "@mui/material";
-
 import {
   Button,
   Dialog,
@@ -26,12 +25,6 @@ type TodoDialogProps = {
   };
   inputTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputNewTodo: string;
-  inputNewDeadline: string;
-  inputDeadline: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputNewStatus: string;
-  inputNewDetail: string;
-  editableTodo: boolean;
-  editableTodoOpen: () => void;
   updateTodos: (
     id: string,
     newTodo: string,
@@ -39,8 +32,6 @@ type TodoDialogProps = {
     deadline: string,
     detail: string
   ) => void;
-  updateTodoStatusInDialog: (e: SelectChangeEvent) => void;
-  updateTodoDetailInDialog: (e: React.ChangeEvent<HTMLInputElement>) => void;
   dialogHandleClose: () => void;
   dialogOpen: boolean;
 };
@@ -49,18 +40,29 @@ const TodoDialog: React.FC<TodoDialogProps> = ({
   todo,
   inputTodo,
   inputNewTodo,
-  inputNewDeadline,
-  inputDeadline,
-  inputNewStatus,
-  inputNewDetail,
-  editableTodo,
-  editableTodoOpen,
   updateTodos,
-  updateTodoStatusInDialog,
-  updateTodoDetailInDialog,
   dialogHandleClose,
   dialogOpen,
 }) => {
+  const [editableTodo, setEditableTodo] = useState(false);
+  const [inputNewDeadline, setInputNewDeadline] = useState("");
+  const [inputNewStatus, setInputNewStatus] = useState("");
+  const [inputNewDetail, setInputNewDetail] = useState("");
+
+  const editableTodoOpen = () => {
+    setEditableTodo(!editableTodo);
+  };
+
+  const inputDeadline = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputNewDeadline(e.target.value);
+  };
+  const updateTodoStatusInDialog = (e: SelectChangeEvent) => {
+    setInputNewStatus(e.target.value);
+  };
+  const updateTodoDetailInDialog = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputNewDetail(e.target.value);
+  };
+
   return (
     <>
       <Dialog

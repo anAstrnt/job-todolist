@@ -7,7 +7,6 @@ import AlarmIcon from "@mui/icons-material/Alarm";
 import AlarmOffIcon from "@mui/icons-material/AlarmOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import TodoStateSection from "./TodoStateSection";
-import { SelectChangeEvent } from "@mui/material";
 
 type todoItems = {
   id: string;
@@ -22,13 +21,8 @@ type todoItems = {
 
 export const TodoPages: React.FC = () => {
   const location = useLocation();
-  const [editableTodo, setEditableTodo] = useState(false);
   const [inputNewTodo, setInputNewTodo] = useState("");
-  const [inputNewStatus, setInputNewStatus] = useState("");
-  const [inputNewDeadline, setInputNewDeadline] = useState("");
-  const [inputNewDetail, setInputNewDetail] = useState("");
   const [todoItems, setTodoItems] = useState<todoItems>([]);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const now = new Date();
   const year = now.getFullYear();
@@ -37,7 +31,6 @@ export const TodoPages: React.FC = () => {
 
   const addTodos = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const newTodo = {
       id: uuidv4(),
       links: location.pathname,
@@ -48,25 +41,17 @@ export const TodoPages: React.FC = () => {
       deadline: "",
       timestamp: `${year}年${month}月${day}日`,
     };
-
     setTodoItems([newTodo, ...todoItems]);
     setInputNewTodo("");
-  };
-
-  const handleDeleteTodo = (id: string) => {
-    const newTodos = todoItems.filter((todo) => todo.id !== id);
-    setTodoItems(newTodos);
   };
 
   const inputTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputNewTodo(e.target.value);
   };
-  const inputDeadline = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputNewDeadline(e.target.value);
-  };
 
-  const editableTodoOpen = () => {
-    setEditableTodo(!editableTodo);
+  const handleDeleteTodo = (id: string) => {
+    const newTodos = todoItems.filter((todo) => todo.id !== id);
+    setTodoItems(newTodos);
   };
 
   const updateTodos = (
@@ -96,25 +81,11 @@ export const TodoPages: React.FC = () => {
     );
   };
 
-  const updateTodoStatusInDialog = (e: SelectChangeEvent) => {
-    setInputNewStatus(e.target.value);
-  };
-  const updateTodoDetailInDialog = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputNewDetail(e.target.value);
-  };
-
   const isLocationPathname = !location.pathname.substring(1).trim();
 
   const inProgressTodos = todoItems.filter((todo) => todo.status === "inProgress");
   const notStartedTodos = todoItems.filter((todo) => todo.status === "notStarted");
   const completedTodos = todoItems.filter((todo) => todo.status === "completed");
-
-  const dialogHandleOpen = () => {
-    setDialogOpen(true);
-  };
-  const dialogHandleClose = () => {
-    setDialogOpen(false);
-  };
 
   return (
     <div className={styles.todoPages}>
@@ -145,19 +116,8 @@ export const TodoPages: React.FC = () => {
           statusFilter={inProgressTodos}
           inputTodo={inputTodo}
           inputNewTodo={inputNewTodo}
-          inputNewDeadline={inputNewDeadline}
-          editableTodo={editableTodo}
-          inputDeadline={inputDeadline}
-          editableTodoOpen={editableTodoOpen}
           updateTodos={updateTodos}
           updateStatus={updateTodoStatus}
-          updateTodoStatusInDialog={updateTodoStatusInDialog}
-          updateTodoDetailInDialog={updateTodoDetailInDialog}
-          inputNewStatus={inputNewStatus}
-          inputNewDetail={inputNewDetail}
-          dialogHandleOpen={dialogHandleOpen}
-          dialogHandleClose={dialogHandleClose}
-          dialogOpen={dialogOpen}
         />
         <TodoStateSection
           title="Not Started"
@@ -166,19 +126,8 @@ export const TodoPages: React.FC = () => {
           statusFilter={notStartedTodos}
           inputTodo={inputTodo}
           inputNewTodo={inputNewTodo}
-          inputNewDeadline={inputNewDeadline}
-          inputDeadline={inputDeadline}
-          editableTodo={editableTodo}
-          editableTodoOpen={editableTodoOpen}
           updateTodos={updateTodos}
           updateStatus={updateTodoStatus}
-          updateTodoStatusInDialog={updateTodoStatusInDialog}
-          updateTodoDetailInDialog={updateTodoDetailInDialog}
-          inputNewStatus={inputNewStatus}
-          inputNewDetail={inputNewDetail}
-          dialogHandleOpen={dialogHandleOpen}
-          dialogHandleClose={dialogHandleClose}
-          dialogOpen={dialogOpen}
         />
         <TodoStateSection
           title="Completed"
@@ -187,19 +136,8 @@ export const TodoPages: React.FC = () => {
           statusFilter={completedTodos}
           inputTodo={inputTodo}
           inputNewTodo={inputNewTodo}
-          inputNewDeadline={inputNewDeadline}
-          inputDeadline={inputDeadline}
-          editableTodo={editableTodo}
-          editableTodoOpen={editableTodoOpen}
           updateTodos={updateTodos}
           updateStatus={updateTodoStatus}
-          updateTodoStatusInDialog={updateTodoStatusInDialog}
-          updateTodoDetailInDialog={updateTodoDetailInDialog}
-          inputNewStatus={inputNewStatus}
-          inputNewDetail={inputNewDetail}
-          dialogHandleOpen={dialogHandleOpen}
-          dialogHandleClose={dialogHandleClose}
-          dialogOpen={dialogOpen}
         />
       </div>
     </div>
