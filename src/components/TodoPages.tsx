@@ -22,8 +22,8 @@ type todoItems = {
 
 export const TodoPages: React.FC = () => {
   const location = useLocation();
-  const [inputNewTodo, setInputNewTodo] = useState("");
   const [editableTodo, setEditableTodo] = useState(false);
+  const [inputNewTodo, setInputNewTodo] = useState("");
   const [inputNewStatus, setInputNewStatus] = useState("");
   const [inputNewDeadline, setInputNewDeadline] = useState("");
   const [inputNewDetail, setInputNewDetail] = useState("");
@@ -34,8 +34,6 @@ export const TodoPages: React.FC = () => {
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
   const day = now.getDate();
-
-  console.log(todoItems);
 
   const addTodos = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

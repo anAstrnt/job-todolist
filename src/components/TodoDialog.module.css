@@ -1,0 +1,10 @@
+.inputTodoDeadline {
+  width: 97%;
+  height: 50px;
+  color: #797979;
+  font-size: 17px;
+  font-weight: 600;
+  padding-left: 10px;
+  border: 1px solid #cfcece;
+  border-radius: 4px;
+}
