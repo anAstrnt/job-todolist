@@ -35,6 +35,7 @@ type TodoStateSectionProps = {
     status: string;
     deadline: string;
   }[];
+  handleDeleteTodo: (id: string) => void;
   inputTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputNewTodo: string;
   inputNewDeadline: string;
@@ -61,6 +62,7 @@ type TodoStateSectionProps = {
 const TodoStateSection: React.FC<TodoStateSectionProps> = ({
   title,
   icon,
+  handleDeleteTodo,
   statusFilter,
   inputTodo,
   inputNewTodo,
@@ -103,7 +105,7 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
               </Typography>
             </CardContent>
             <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
-              <IconButton>
+              <IconButton onClick={() => handleDeleteTodo(todo.id)}>
                 <RestoreFromTrashIcon />
               </IconButton>
               <Grid sx={{ justifyContent: "right" }}>

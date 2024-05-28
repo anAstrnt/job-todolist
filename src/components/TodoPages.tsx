@@ -55,6 +55,11 @@ export const TodoPages: React.FC = () => {
     setInputNewTodo("");
   };
 
+  const handleDeleteTodo = (id: string) => {
+    const newTodos = todoItems.filter((todo) => todo.id !== id);
+    setTodoItems(newTodos);
+  };
+
   const inputTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputNewTodo(e.target.value);
   };
@@ -138,6 +143,7 @@ export const TodoPages: React.FC = () => {
         <TodoStateSection
           title="In Progress"
           icon={<AlarmIcon />}
+          handleDeleteTodo={handleDeleteTodo}
           statusFilter={inProgressTodos}
           inputTodo={inputTodo}
           inputNewTodo={inputNewTodo}
@@ -158,6 +164,7 @@ export const TodoPages: React.FC = () => {
         <TodoStateSection
           title="Not Started"
           icon={<AlarmOffIcon />}
+          handleDeleteTodo={handleDeleteTodo}
           statusFilter={notStartedTodos}
           inputTodo={inputTodo}
           inputNewTodo={inputNewTodo}
@@ -178,6 +185,7 @@ export const TodoPages: React.FC = () => {
         <TodoStateSection
           title="Completed"
           icon={<CheckCircleIcon />}
+          handleDeleteTodo={handleDeleteTodo}
           statusFilter={completedTodos}
           inputTodo={inputTodo}
           inputNewTodo={inputNewTodo}
