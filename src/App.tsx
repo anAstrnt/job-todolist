@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./App.css";
 import TitleAddBar from "./components/TitleAddBar";
 import { todoContext, TodosProvider } from "./context/Todos";
