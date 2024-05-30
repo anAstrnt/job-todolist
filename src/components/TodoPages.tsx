@@ -66,10 +66,10 @@ export const TodoPages: React.FC = () => {
         item.id === id
           ? {
               ...item,
-              todo: updateNewTodo,
-              status: newStatus,
-              deadline: deadline,
-              detail: detail,
+              todo: updateNewTodo || item.todo,
+              status: newStatus || item.status,
+              deadline: deadline || item.deadline,
+              detail: detail || item.detail,
             }
           : item
       )
