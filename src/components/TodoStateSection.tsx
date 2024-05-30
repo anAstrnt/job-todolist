@@ -27,8 +27,6 @@ type TodoStateSectionProps = {
     deadline: string;
   }[];
   handleDeleteTodo: (id: string) => void;
-  inputTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputNewTodo: string;
   updateTodos: (
     id: string,
     newTodo: string,
@@ -44,8 +42,6 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
   icon,
   handleDeleteTodo,
   statusFilter,
-  inputTodo,
-  inputNewTodo,
   updateTodos,
   updateStatus,
 }) => {
@@ -112,8 +108,6 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
           {/* detailDialog */}
           <TodoDialog
             todo={todo}
-            inputTodo={inputTodo}
-            inputNewTodo={inputNewTodo}
             updateTodos={updateTodos}
             dialogHandleClose={dialogHandleClose}
             dialogOpen={dialogOpen}

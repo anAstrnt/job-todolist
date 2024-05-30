@@ -23,8 +23,6 @@ type TodoDialogProps = {
     status: string;
     deadline: string;
   };
-  inputTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputNewTodo: string;
   updateTodos: (
     id: string,
     newTodo: string,
@@ -38,19 +36,22 @@ type TodoDialogProps = {
 
 const TodoDialog: React.FC<TodoDialogProps> = ({
   todo,
-  inputTodo,
-  inputNewTodo,
   updateTodos,
   dialogHandleClose,
   dialogOpen,
 }) => {
   const [editableTodo, setEditableTodo] = useState(false);
+  const [updateNewTodo, setUpdateNewTodo] = useState("");
   const [inputNewDeadline, setInputNewDeadline] = useState("");
   const [inputNewStatus, setInputNewStatus] = useState("");
   const [inputNewDetail, setInputNewDetail] = useState("");
 
   const editableTodoOpen = () => {
     setEditableTodo(!editableTodo);
+  };
+
+  const updateTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdateNewTodo(e.target.value);
   };
 
   const inputDeadline = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +75,7 @@ const TodoDialog: React.FC<TodoDialogProps> = ({
             e.preventDefault();
             updateTodos(
               todo.id,
-              inputNewTodo,
+              updateNewTodo,
               inputNewStatus,
               inputNewDeadline,
               inputNewDetail
@@ -91,11 +92,11 @@ const TodoDialog: React.FC<TodoDialogProps> = ({
                 id={todo.id}
                 type="text"
                 sx={{ fontSize: "17px" }}
-                value={inputNewTodo}
-                onChange={inputTodo}
+                value={updateNewTodo}
+                onChange={updateTodo}
               />
             ) : (
-              inputNewTodo || todo.todo
+              updateNewTodo || todo.todo
             )}
           </DialogContentText>
           <IconButton sx={{ paddingLeft: "25px" }} onClick={editableTodoOpen}>

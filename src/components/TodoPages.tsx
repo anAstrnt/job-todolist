@@ -56,7 +56,7 @@ export const TodoPages: React.FC = () => {
 
   const updateTodos = (
     id: string,
-    inputNewTodo: string,
+    updateNewTodo: string,
     newStatus: string,
     deadline: string,
     detail: string
@@ -66,7 +66,7 @@ export const TodoPages: React.FC = () => {
         item.id === id
           ? {
               ...item,
-              todo: inputNewTodo,
+              todo: updateNewTodo,
               status: newStatus,
               deadline: deadline,
               detail: detail,
@@ -75,6 +75,7 @@ export const TodoPages: React.FC = () => {
       )
     );
   };
+
   const updateTodoStatus = (id: string, newStatus: string) => {
     setTodoItems((prevItems) =>
       prevItems.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
@@ -114,8 +115,6 @@ export const TodoPages: React.FC = () => {
           icon={<AlarmIcon />}
           handleDeleteTodo={handleDeleteTodo}
           statusFilter={inProgressTodos}
-          inputTodo={inputTodo}
-          inputNewTodo={inputNewTodo}
           updateTodos={updateTodos}
           updateStatus={updateTodoStatus}
         />
@@ -124,8 +123,6 @@ export const TodoPages: React.FC = () => {
           icon={<AlarmOffIcon />}
           handleDeleteTodo={handleDeleteTodo}
           statusFilter={notStartedTodos}
-          inputTodo={inputTodo}
-          inputNewTodo={inputNewTodo}
           updateTodos={updateTodos}
           updateStatus={updateTodoStatus}
         />
@@ -134,8 +131,6 @@ export const TodoPages: React.FC = () => {
           icon={<CheckCircleIcon />}
           handleDeleteTodo={handleDeleteTodo}
           statusFilter={completedTodos}
-          inputTodo={inputTodo}
-          inputNewTodo={inputNewTodo}
           updateTodos={updateTodos}
           updateStatus={updateTodoStatus}
         />
