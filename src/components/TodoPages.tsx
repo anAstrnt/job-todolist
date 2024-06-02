@@ -21,6 +21,7 @@ type todoItems = {
 
 export const TodoPages: React.FC = () => {
   const location = useLocation();
+  const [idStock, setIdStock] = useState("");
   const [dayStart, setDayStart] = useState("");
   const [dayEnd, setDayEnd] = useState("");
   const [noDeadline, setNoDeadline] = useState(true);
@@ -85,6 +86,29 @@ export const TodoPages: React.FC = () => {
     );
   };
 
+  // 検索機能(ID)
+  const setId = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIdStock(e.target.value);
+  };
+
+  const searchId = (todo: {
+    id: string;
+    links: string;
+    titles: string;
+    todo: string;
+    detail: string;
+    status: string;
+    deadline: string;
+    timestamp: string;
+  }) => {
+    if (todo.id === idStock) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  // 検索機能(Deadline)
   const onChangeDayStart = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDayStart(e.target.value);
   };
@@ -140,15 +164,24 @@ export const TodoPages: React.FC = () => {
 
   const inProgressTodos = todoItems.filter(
     (todo) =>
-      todo.status === "inProgress" && deadlineSearch(todo) && noDeadlineProcess(todo)
+      todo.status === "inProgress" &&
+      deadlineSearch(todo) &&
+      noDeadlineProcess(todo) &&
+      searchId(todo)
   );
   const notStartedTodos = todoItems.filter(
     (todo) =>
-      todo.status === "notStarted" && deadlineSearch(todo) && noDeadlineProcess(todo)
+      todo.status === "notStarted" &&
+      deadlineSearch(todo) &&
+      noDeadlineProcess(todo) &&
+      searchId(todo)
   );
   const completedTodos = todoItems.filter(
     (todo) =>
-      todo.status === "completed" && deadlineSearch(todo) && noDeadlineProcess(todo)
+      todo.status === "completed" &&
+      deadlineSearch(todo) &&
+      noDeadlineProcess(todo) &&
+      searchId(todo)
   );
 
   const toggleNoDeadline = () => {
@@ -181,10 +214,7 @@ export const TodoPages: React.FC = () => {
         {/* searchAria */}
         <div className={styles.searchAria}>
           <h2>ID Search</h2>
-          <form action="">
-            <input type="text" />
-            <button>button</button>
-          </form>
+          <input type="text" value={idStock} onChange={(e) => setId(e)} />
           <h2>Deadline Search</h2>
           <p>start</p>
           <input type="date" value={dayStart} onChange={(e) => onChangeDayStart(e)} />
