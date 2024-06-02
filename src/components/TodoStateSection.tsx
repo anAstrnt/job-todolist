@@ -45,13 +45,13 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
   updateTodos,
   updateStatus,
 }) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState<{ [id: string]: boolean }>({});
 
-  const dialogHandleOpen = () => {
-    setDialogOpen(true);
+  const dialogHandleOpen = (id: string) => {
+    setDialogOpen((prev) => ({ ...prev, [id]: true }));
   };
-  const dialogHandleClose = () => {
-    setDialogOpen(false);
+  const dialogHandleClose = (id: string) => {
+    setDialogOpen((prev) => ({ ...prev, [id]: false }));
   };
 
   return (
@@ -69,7 +69,7 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
               title={todo.todo}
               subheader={todo.deadline || "No Deadline"}
               action={
-                <IconButton onClick={dialogHandleOpen}>
+                <IconButton onClick={() => dialogHandleOpen(todo.id)}>
                   <KeyboardArrowDownRoundedIcon />
                 </IconButton>
               }
@@ -110,8 +110,8 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
           <TodoDialog
             todo={todo}
             updateTodos={updateTodos}
-            dialogHandleClose={dialogHandleClose}
-            dialogOpen={dialogOpen}
+            dialogHandleClose={() => dialogHandleClose(todo.id)}
+            dialogOpen={dialogOpen[todo.id] || false}
           />
         </div>
       ))}
