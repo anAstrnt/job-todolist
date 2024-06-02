@@ -21,6 +21,9 @@ type todoItems = {
 
 export const TodoPages: React.FC = () => {
   const location = useLocation();
+  const [dayStart, setDayStart] = useState("");
+  const [dayEnd, setDayEnd] = useState("");
+  const [noDeadline, setNoDeadline] = useState(true);
   const [inputNewTodo, setInputNewTodo] = useState("");
   const [todoItems, setTodoItems] = useState<todoItems>([]);
 
@@ -82,11 +85,77 @@ export const TodoPages: React.FC = () => {
     );
   };
 
-  const isLocationPathname = !location.pathname.substring(1).trim();
+  const onChangeDayStart = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDayStart(e.target.value);
+  };
+  const onChangeDayEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDayEnd(e.target.value);
+  };
 
-  const inProgressTodos = todoItems.filter((todo) => todo.status === "inProgress");
-  const notStartedTodos = todoItems.filter((todo) => todo.status === "notStarted");
-  const completedTodos = todoItems.filter((todo) => todo.status === "completed");
+  const deadlineSearch = (todo: {
+    id: string;
+    links: string;
+    titles: string;
+    todo: string;
+    detail: string;
+    status: string;
+    deadline: string;
+    timestamp: string;
+  }) => {
+    const startDate = dayStart ? new Date(dayStart).getTime() : null;
+    const endDate = dayEnd ? new Date(dayEnd).getTime() : null;
+    const todoDate = todo.deadline ? new Date(todo.deadline).getTime() : null;
+
+    if (todoDate === null) {
+      return true;
+    }
+
+    if (startDate && endDate) {
+      return startDate <= todoDate && todoDate <= endDate;
+    } else if (startDate) {
+      return startDate <= todoDate;
+    } else if (endDate) {
+      return todoDate <= endDate;
+    } else {
+      return true;
+    }
+  };
+
+  const noDeadlineProcess = (todo: {
+    id: string;
+    links: string;
+    titles: string;
+    todo: string;
+    detail: string;
+    status: string;
+    deadline: string;
+    timestamp: string;
+  }) => {
+    if (todo.deadline == "") {
+      return noDeadline;
+    } else {
+      return true;
+    }
+  };
+
+  const inProgressTodos = todoItems.filter(
+    (todo) =>
+      todo.status === "inProgress" && deadlineSearch(todo) && noDeadlineProcess(todo)
+  );
+  const notStartedTodos = todoItems.filter(
+    (todo) =>
+      todo.status === "notStarted" && deadlineSearch(todo) && noDeadlineProcess(todo)
+  );
+  const completedTodos = todoItems.filter(
+    (todo) =>
+      todo.status === "completed" && deadlineSearch(todo) && noDeadlineProcess(todo)
+  );
+
+  const toggleNoDeadline = () => {
+    setNoDeadline(!noDeadline);
+  };
+
+  const isLocationPathname = !location.pathname.substring(1).trim();
 
   return (
     <div className={styles.todoPages}>
@@ -106,6 +175,17 @@ export const TodoPages: React.FC = () => {
             <AddBoxIcon sx={{ width: "20%", height: "20%" }} />
           </button>
         </form>
+      </div>
+
+      {/* searchAria */}
+      <div className={styles.searchAria}>
+        <h2>Search</h2>
+        <p>start</p>
+        <input type="date" value={dayStart} onChange={(e) => onChangeDayStart(e)} />
+        <p>end</p>
+        <input type="date" value={dayEnd} onChange={(e) => onChangeDayEnd(e)} />
+        <p>Do you want to display tasks with no deadline?</p>
+        <button onClick={toggleNoDeadline}>Button</button>
       </div>
 
       {/* TodoAria */}

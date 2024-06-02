@@ -61,6 +61,7 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
         {icon}
         <p>{title}</p>
       </div>
+
       {statusFilter.map((todo) => (
         <div key={todo.id} className={styles.todoCard}>
           <Card sx={{ maxWidth: 276 }}>
