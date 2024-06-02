@@ -5,6 +5,11 @@
   margin-left: auto;
 }
 
+.headline {
+  display: flex;
+  align-items: flex-start;
+}
+
 .titleName {
   font-size: 60px;
   font-weight: 700;
@@ -49,4 +54,5 @@
 
 .searchAria {
   display: inline-block;
+  height: 0;
 }

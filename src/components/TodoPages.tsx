@@ -159,33 +159,40 @@ export const TodoPages: React.FC = () => {
 
   return (
     <div className={styles.todoPages}>
-      {/* inputTodoAria */}
-      <div className={styles.titleName}>
-        <p>{location.pathname.substring(1)}</p>
-        <form className={styles.addTodoForm} onSubmit={(e) => addTodos(e)}>
-          <input
-            type="text"
-            name="inputTodo"
-            placeholder="Add Todo"
-            className={styles.inputTodo}
-            value={inputNewTodo}
-            onChange={(e) => inputTodo(e)}
-          />
-          <button className={styles.addTodoButton} disabled={isLocationPathname}>
-            <AddBoxIcon sx={{ width: "20%", height: "20%" }} />
-          </button>
-        </form>
-      </div>
+      <div className={styles.headline}>
+        {/* inputTodoAria */}
+        <div className={styles.titleName}>
+          <p>{location.pathname.substring(1)}</p>
+          <form className={styles.addTodoForm} onSubmit={(e) => addTodos(e)}>
+            <input
+              type="text"
+              name="inputTodo"
+              placeholder="Add Todo"
+              className={styles.inputTodo}
+              value={inputNewTodo}
+              onChange={(e) => inputTodo(e)}
+            />
+            <button className={styles.addTodoButton} disabled={isLocationPathname}>
+              <AddBoxIcon sx={{ width: "20%", height: "20%" }} />
+            </button>
+          </form>
+        </div>
 
-      {/* searchAria */}
-      <div className={styles.searchAria}>
-        <h2>Search</h2>
-        <p>start</p>
-        <input type="date" value={dayStart} onChange={(e) => onChangeDayStart(e)} />
-        <p>end</p>
-        <input type="date" value={dayEnd} onChange={(e) => onChangeDayEnd(e)} />
-        <p>Do you want to display tasks with no deadline?</p>
-        <button onClick={toggleNoDeadline}>Button</button>
+        {/* searchAria */}
+        <div className={styles.searchAria}>
+          <h2>ID Search</h2>
+          <form action="">
+            <input type="text" />
+            <button>button</button>
+          </form>
+          <h2>Deadline Search</h2>
+          <p>start</p>
+          <input type="date" value={dayStart} onChange={(e) => onChangeDayStart(e)} />
+          <p>end</p>
+          <input type="date" value={dayEnd} onChange={(e) => onChangeDayEnd(e)} />
+          <p>Do you want to display tasks with no deadline?</p>
+          <button onClick={toggleNoDeadline}>Button</button>
+        </div>
       </div>
 
       {/* TodoAria */}
