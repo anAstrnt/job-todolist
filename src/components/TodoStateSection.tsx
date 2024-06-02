@@ -47,6 +47,7 @@ const TodoStateSection: React.FC<TodoStateSectionProps> = ({
 }) => {
   const [dialogOpen, setDialogOpen] = useState<{ [id: string]: boolean }>({});
 
+  // 詳細編集画面（Dialog）を表示・非表示にする
   const dialogHandleOpen = (id: string) => {
     setDialogOpen((prev) => ({ ...prev, [id]: true }));
   };

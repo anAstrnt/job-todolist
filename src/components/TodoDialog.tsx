@@ -46,14 +46,15 @@ const TodoDialog: React.FC<TodoDialogProps> = ({
   const [inputNewStatus, setInputNewStatus] = useState("");
   const [inputNewDetail, setInputNewDetail] = useState("");
 
+  // Todo表示かTodo編集かを切り替え
   const editableTodoOpen = () => {
     setEditableTodo(!editableTodo);
   };
 
+  // 各種Todoの詳細編集処理
   const updateTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUpdateNewTodo(e.target.value);
   };
-
   const inputDeadline = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputNewDeadline(e.target.value);
   };

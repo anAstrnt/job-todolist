@@ -28,6 +28,11 @@ export const TodoPages: React.FC = () => {
   const [inputNewTodo, setInputNewTodo] = useState("");
   const [todoItems, setTodoItems] = useState<todoItems>([]);
 
+  // 新しいTodoを追加
+  const inputTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputNewTodo(e.target.value);
+  };
+
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
@@ -49,15 +54,13 @@ export const TodoPages: React.FC = () => {
     setInputNewTodo("");
   };
 
-  const inputTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputNewTodo(e.target.value);
-  };
-
+  // Todoを削除
   const handleDeleteTodo = (id: string) => {
     const newTodos = todoItems.filter((todo) => todo.id !== id);
     setTodoItems(newTodos);
   };
 
+  // DialogでTodoを更新
   const updateTodos = (
     id: string,
     updateNewTodo: string,
@@ -80,6 +83,7 @@ export const TodoPages: React.FC = () => {
     );
   };
 
+  // TodoCardのアイコンでステータスの切り替え
   const updateTodoStatus = (id: string, newStatus: string) => {
     setTodoItems((prevItems) =>
       prevItems.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
@@ -145,6 +149,10 @@ export const TodoPages: React.FC = () => {
     }
   };
 
+  const toggleNoDeadline = () => {
+    setNoDeadline(!noDeadline);
+  };
+
   const noDeadlineProcess = (todo: {
     id: string;
     links: string;
@@ -162,6 +170,7 @@ export const TodoPages: React.FC = () => {
     }
   };
 
+  // ステータス毎の検索結果のフィルター
   const inProgressTodos = todoItems.filter(
     (todo) =>
       todo.status === "inProgress" &&
@@ -184,10 +193,7 @@ export const TodoPages: React.FC = () => {
       searchId(todo)
   );
 
-  const toggleNoDeadline = () => {
-    setNoDeadline(!noDeadline);
-  };
-
+  // タイトルが選択されていないと、Todoを入力できないように処理
   const isLocationPathname = !location.pathname.substring(1).trim();
 
   return (
