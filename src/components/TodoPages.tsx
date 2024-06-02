@@ -173,6 +173,7 @@ export const TodoPages: React.FC = () => {
   // ステータス毎の検索結果のフィルター
   const inProgressTodos = todoItems.filter(
     (todo) =>
+      todo.titles === location.pathname.substring(1) &&
       todo.status === "inProgress" &&
       deadlineSearch(todo) &&
       noDeadlineProcess(todo) &&
@@ -180,6 +181,7 @@ export const TodoPages: React.FC = () => {
   );
   const notStartedTodos = todoItems.filter(
     (todo) =>
+      todo.titles === location.pathname.substring(1) &&
       todo.status === "notStarted" &&
       deadlineSearch(todo) &&
       noDeadlineProcess(todo) &&
@@ -187,6 +189,7 @@ export const TodoPages: React.FC = () => {
   );
   const completedTodos = todoItems.filter(
     (todo) =>
+      todo.titles === location.pathname.substring(1) &&
       todo.status === "completed" &&
       deadlineSearch(todo) &&
       noDeadlineProcess(todo) &&
