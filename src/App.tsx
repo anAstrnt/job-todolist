@@ -1,21 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import TitleAddBar from "./components/TitleAddBar";
-import { todoContext, TodosProvider } from "./context/Todos";
 import { Routes, Route } from "react-router-dom";
 import { TodoPages } from "./components/TodoPages";
 
 const App: React.FC = () => {
-  const ctx = TodosProvider();
+  const [links, setLinks] = useState("");
+
+  const setIsLinks = (link: string) => {
+    setLinks(link);
+  };
 
   return (
     <div className="App">
-      <todoContext.Provider value={ctx}>
-        <TitleAddBar />
-        <Routes>
-          <Route path={ctx.links} element={<TodoPages />} />
-        </Routes>
-      </todoContext.Provider>
+      <TitleAddBar setIsLinks={setIsLinks} />
+      <Routes>
+        <Route path={links} element={<TodoPages />} />
+      </Routes>
     </div>
   );
 };

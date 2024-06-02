@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styles from "./TitleAddBar.module.css";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -6,7 +6,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import TocIcon from "@mui/icons-material/Toc";
 import AddIcon from "@mui/icons-material/Add";
-import { todoContext } from "../context/Todos";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -22,8 +21,11 @@ const titleList = {
   marginTop: "50px",
 };
 
-const TitleAddBar: React.FC = () => {
-  const ctx = useContext(todoContext);
+type titleAddBar = {
+  setIsLinks: (link: string) => void;
+};
+
+const TitleAddBar: React.FC<titleAddBar> = ({ setIsLinks }) => {
   const [inputTitle, setInputTitle] = useState("");
   const [titleLists, setTitleLists] = useState<newTitle[]>([]);
 
@@ -48,7 +50,7 @@ const TitleAddBar: React.FC = () => {
 
   //タイトルをクリックしページ遷移
   const onTodoPage = (link: string) => {
-    ctx.setIsLinks(link);
+    setIsLinks(link);
   };
 
   return (
